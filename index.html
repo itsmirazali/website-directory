@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Directory</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+    --bg: #f4f7fb; --card: #ffffff; --text: #172033; --muted: #6b7280;
+    --border: #e5e7eb; --primary: #4f46e5; --primary-hover: #4338ca;
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+body.dark {
+    --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --muted: #94a3b8;
+    --border: #334155; --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+body { font-family: Inter, system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; transition: 0.25s; }
+button, input, select { font: inherit; }
+.container { width: min(1200px, calc(100% - 32px)); margin: auto; }
+header { background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+.header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-icon { width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg, #4f46e5, #7c3aed); display: flex; align-items: center; justify-content: center; color: white; font-size: 23px; }
+.brand h1 { font-size: 20px; font-weight: 800; }
+.brand p { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.icon-button { width: 42px; height: 42px; border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
+main { padding: 32px 0 50px; }
+.hero { margin-bottom: 25px; }
+.hero h2 { font-size: 30px; font-weight: 800; margin-bottom: 7px; }
+.hero p { color: var(--muted); }
+.readonly-badge { display: inline-block; padding: 5px 12px; border-radius: 999px; background: rgba(79,70,229,.10); color: var(--primary); font-size: 12px; font-weight: 700; margin-top: 10px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 22px; }
+.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+.stat-title { color: var(--muted); font-size: 13px; margin-bottom: 7px; }
+.stat-value { font-size: 28px; font-weight: 800; }
+.toolbar { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 15px; display: flex; gap: 12px; margin-bottom: 18px; box-shadow: var(--shadow); flex-wrap: wrap; }
+.search-wrapper { flex: 1; min-width: 200px; position: relative; }
+.search-wrapper span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+.search-wrapper input { width: 100%; height: 44px; padding: 0 14px 0 42px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); outline: none; }
+select { height: 44px; min-width: 160px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); padding: 0 12px; outline: none; cursor: pointer; }
+.table-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 700px; }
+th { background: rgba(127,127,127,.05); color: var(--muted); font-size: 12px; text-transform: uppercase; text-align: left; padding: 15px 18px; border-bottom: 1px solid var(--border); }
+td { padding: 15px 18px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+.website-info { display: flex; align-items: center; gap: 12px; }
+.logo { width: 44px; height: 44px; object-fit: contain; border-radius: 11px; border: 1px solid var(--border); background: white; padding: 6px; }
+.website-name { font-weight: 750; }
+.purpose-badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(79,70,229,.10); color: var(--primary); font-size: 12px; font-weight: 700; }
+.website-link { color: var(--primary); text-decoration: none; font-size: 13px; }
+.website-link:hover { text-decoration: underline; }
+.actions { display: flex; gap: 6px; }
+.action-button { width: 34px; height: 34px; border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; font-size: 15px; }
+.action-button:hover { border-color: var(--primary); color: var(--primary); }
+.empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+.toast { position: fixed; right: 20px; bottom: 20px; background: #111827; color: white; padding: 13px 17px; border-radius: 10px; opacity: 0; transform: translateY(20px); pointer-events: none; transition: .25s; z-index: 1000; }
+.toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+<header>
+<div class="container header-inner">
+    <div class="brand">
+        <div class="brand-icon">🌐</div>
+        <div>
+            <h1>Website Directory</h1>
+            <p>Public directory of websites</p>
+        </div>
+    </div>
+    <div class="header-actions">
+        <button class="icon-button" onclick="toggleTheme()" title="Dark Mode">🌙</button>
+    </div>
+</div>
+</header>
+<main class="container">
+<section class="hero">
+    <div>
+        <h2>Website Directory</h2>
+        <p>Browse a collection of websites.</p>
+        <span class="readonly-badge">👁️ View Only</span>
+    </div>
+</section>
+<section class="stats">
+    <div class="stat-card"><div class="stat-title">Total Websites</div><div class="stat-value" id="totalWebsites">0</div></div>
+    <div class="stat-card"><div class="stat-title">Categories</div><div class="stat-value" id="totalCategories">0</div></div>
+    <div class="stat-card"><div class="stat-title">Displayed</div><div class="stat-value" id="displayedWebsites">0</div></div>
+</section>
+<section class="toolbar">
+    <div class="search-wrapper">
+        <span>🔍</span>
+        <input id="searchInput" type="search" placeholder="Search website, URL or purpose..." oninput="renderWebsites()">
+    </div>
+    <select id="purposeFilter" onchange="renderWebsites()"><option value="">All Purposes</option></select>
+</section>
+<section class="table-card">
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Website</th><th>Address</th><th>Purpose</th><th></th></tr>
+</thead>
+<tbody id="websiteTable"></tbody>
+</table>
+</div>
+<div class="empty" id="emptyState" style="display:none">
+    <h3>No websites found</h3>
+    <p>Change your search or filter.</p>
+</div>
+</section>
+</main>
+<footer class="container">
+    <p style="text-align:center;color:var(--muted);padding:25px 0;font-size:12px">Website Directory · View on GitHub Pages</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA_FILE = "data.json";
+let websites = [];
+
+document.addEventListener("DOMContentLoaded", init);
+async function init() { loadTheme(); await loadData(); }
+
+async function loadData() {
+    try {
+        const response = await fetch(`${DATA_FILE}?t=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error("Unable to load data.json");
+        websites = await response.json();
+        renderPurposeFilter(); renderWebsites(); showToast("Website data loaded.");
+    } catch (error) {
+        websites = [{ id: "sync", name: "Sync", logo: "https://www.sync.com/hubfs/sync-logo-color.svg", address: "https://www.sync.com", purpose: "Cloud Drive" }];
+        renderPurposeFilter(); renderWebsites(); showToast("Using default data.");
+    }
+}
+
+function renderWebsites() {
+    const table = document.getElementById("websiteTable");
+    const search = document.getElementById("searchInput").value.toLowerCase().trim();
+    const purpose = document.getElementById("purposeFilter").value;
+    const filtered = websites.filter(site => (!search || site.name.toLowerCase().includes(search) || site.purpose.toLowerCase().includes(search) || site.address.toLowerCase().includes(search)) && (!purpose || site.purpose === purpose));
+
+    table.innerHTML = "";
+    filtered.forEach(site => {
+        const row = document.createElement("tr");
+        const logo = `
+            <td><div class="website-info"><img class="logo" src="${escapeHtml(site.logo)}" alt="" onerror="this.style.display='none';"><div class="website-name">${escapeHtml(site.name)}</div></div></td>`;
+        const address = `<td><a class="website-link" href="${escapeHtml(site.address)}" target="_blank" rel="noopener">${escapeHtml(site.address)}</a></td>`;
+        const purposeCell = `<td><span class="purpose-badge">${escapeHtml(site.purpose)}</span></td>`;
+        const open = `<td><div class="actions"><a class="action-button" href="${escapeHtml(site.address)}" target="_blank" rel="noopener" title="Open website">↗</a></div></td>`;
+        row.innerHTML = logo + address + purposeCell + open;
+        table.appendChild(row);
+    });
+    document.getElementById("totalWebsites").textContent = websites.length;
+    document.getElementById("displayedWebsites").textContent = filtered.length;
+    document.getElementById("totalCategories").textContent = new Set(websites.map(s => s.purpose)).size;
+    document.getElementById("emptyState").style.display = filtered.length ? "none" : "";
+}
+
+function renderPurposeFilter() {
+    const select = document.getElementById("purposeFilter");
+    const purposes = [...new Set(websites.map(s => s.purpose).filter(Boolean))].sort();
+    select.innerHTML = `<option value="">All Purposes</option>`;
+    purposes.forEach(p => select.appendChild(new Option(p, p)));
+}
+
+function escapeHtml(v) { return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+function toggleTheme() { const dark = document.body.classList.toggle("dark"); localStorage.setItem("theme", dark ? "dark" : "light"); }
+function loadTheme() { if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark"); }
+function showToast(m) { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 3000); }
+</script>
+</body>
+</html>

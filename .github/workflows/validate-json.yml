@@ -1,0 +1,19 @@
+name: Validate JSON Format
+
+on:
+  push:
+    paths:
+      - 'data.json'
+  pull_request:
+    paths:
+      - 'data.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate data.json Syntax
+        run: python -m json.tool data.json > /dev/null

@@ -1,0 +1,38 @@
+name: Sync CSV from JSON
+
+on:
+  push:
+    paths:
+      - 'data.json'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Convert JSON to CSV
+        run: |
+          python -c "
+          import json, csv
+          with open('data.json') as jf:
+              data = json.load(jf)
+          with open('data.csv', 'w', newline='', encoding='utf-8') as cf:
+              writer = csv.writer(cf)
+              writer.writerow(['id', 'name', 'logo', 'address', 'purpose'])
+              for row in data:
+                  writer.writerow([row.get('id'), row.get('name'), row.get('logo'), row.get('address'), row.get('purpose')])
+          "
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.csv
+          git diff --quiet && git diff --staged --quiet || (git commit -m "auto: Sync data.csv from data.json" && git push)
