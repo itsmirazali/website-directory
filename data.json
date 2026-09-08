@@ -5,5 +5,19 @@
 "logo": "https://www.sync.com/hubfs/sync-logo-color.svg",
 "address": "https://www.sync.com",
 "purpose": "Cloud Drive"
+},
+{
+"id": "google",
+"name": "Google",
+"logo": "https://www.google.com/favicon.ico",
+"address": "https://www.google.com",
+"purpose": "Search"
+},
+{
+"id": "youtube",
+"name": "YouTube",
+"logo": "https://www.youtube.com/favicon.ico",
+"address": "https://www.youtube.com",
+"purpose": "Video"
 }
 ]
