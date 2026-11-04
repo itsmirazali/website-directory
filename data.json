@@ -19,5 +19,12 @@
     "logo": "https://www.youtube.com/favicon.ico",
     "address": "https://www.youtube.com",
     "purpose": "Video"
+  },
+  {
+    "id": "bucketlistnl",
+    "name": "Bucketlist.nl",
+    "logo": "https://bucketlist.nl/brand/favicon.svg?v=20260909",
+    "address": "https://bucketlist.nl/",
+    "purpose": "Travel & life experiences (Dutch)"
   }
 ]
